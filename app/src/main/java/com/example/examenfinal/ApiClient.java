@@ -15,7 +15,7 @@ public class ApiClient {
         OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build();
 
         Retrofit retrofit = new  Retrofit.Builder()
-                .baseUrl("https://revistas.uteq.edu.ec/")
+                .baseUrl("https://revistas.uteq.edu.ec/ws/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();

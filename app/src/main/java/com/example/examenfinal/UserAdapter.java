@@ -16,14 +16,14 @@ import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserAdapterVH> {
 
-    private List<UserResponse> userResponseList;
+    private List<IssueResponse> issueResponseList;
     private Context context;
 
     public UserAdapter() {
 
     }
-    public void setData(List<UserResponse> useResponseList) {
-        this.userResponseList = useResponseList;
+    public void setData(List<IssueResponse> useResponseList) {
+        this.issueResponseList = useResponseList;
         notifyDataSetChanged();
     }
 
@@ -31,26 +31,26 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserAdapterVH>
     @Override
     public UserAdapterVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
-        return new com.example.examenfinal.UserAdapter.UserAdapterVH(LayoutInflater.from(context).inflate(R.layout.row_users, parent, false));
+        return new com.example.examenfinal.UserAdapter.UserAdapterVH(LayoutInflater.from(context).inflate(R.layout.row_issue, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull UserAdapterVH holder, int position) {
-        UserResponse userResponse = userResponseList.get(position);
+        IssueResponse issueResponse = issueResponseList.get(position);
 
-        String username = userResponse.getIssue_id();
-        String prefix = userResponse.getVolume();
-        String number = userResponse.getNumber();
-        String year = userResponse.getYear();
-        String dateP = userResponse.getDate_published();
-        String title = userResponse.getTitle();
-        String doi = userResponse.getDoi();
+        String username = issueResponse.getIssue_id();
+        String prefix = issueResponse.getVolume();
+        String number = issueResponse.getNumber();
+        String year = issueResponse.getYear();
+        String dateP = issueResponse.getDate_published();
+        String title = issueResponse.getTitle();
+        String doi = issueResponse.getDoi();
 
 
         holder.prefix.setText(prefix);
         holder.username.setText(username);
         Glide.with(context)
-                .load(userResponse.getCover())
+                .load(issueResponse.getCover())
                 .into(holder.imageMore);
 
         holder.number.setText(number);
@@ -64,7 +64,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserAdapterVH>
 
     @Override
     public int getItemCount() {
-        return userResponseList.size();
+        return issueResponseList.size();
     }
 
     public class UserAdapterVH extends RecyclerView.ViewHolder {
@@ -80,15 +80,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserAdapterVH>
 
         public UserAdapterVH(@NonNull View itemView) {
             super(itemView);
-            username = itemView.findViewById(R.id.username);
-            prefix = itemView.findViewById(R.id.txtVolume);
+            username = itemView.findViewById(R.id.tvTittle);
+            prefix = itemView.findViewById(R.id.txtDescripcion);
             number = itemView.findViewById(R.id.txtnumber);
             year = itemView.findViewById(R.id.txtYear);
             dateP = itemView.findViewById(R.id.txtDatePublished);
             title = itemView.findViewById(R.id.txtTitle);
             doi = itemView.findViewById(R.id.txtDoi);
 
-            imageMore = itemView.findViewById(R.id.imageMore);
+            imageMore = itemView.findViewById(R.id.imgPortada);
         }
     }
 }

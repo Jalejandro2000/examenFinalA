@@ -2,13 +2,16 @@ package com.example.examenfinal;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
 
+
+import com.example.examenfinal.viewholder.IssueRowViewHolder;
+import com.example.examenfinal.viewholder.JournalViewHolder;
+import com.mindorks.placeholderview.PlaceHolderView;
+import com.mindorks.placeholderview.annotations.Click;
 
 import java.util.List;
 
@@ -19,7 +22,9 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    RecyclerView recyclerView;
+
+
+    PlaceHolderView placeHolderView;
 
     UserAdapter userAdapter;
 
@@ -30,39 +35,55 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         toolbar = findViewById(R.id.toolbar);
-        recyclerView = findViewById(R.id.reciclerview);
+        placeHolderView = findViewById(R.id.placeholderview);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        placeHolderView.getBuilder()
+                .setHasFixedSize(false)
+                .setItemViewCacheSize(10)
+                .setLayoutManager(new LinearLayoutManager(this));
 
-        userAdapter = new UserAdapter();
 
-        getAllUsers();
+
+
+
+
+        getALLJournals();
 
 
     }
 
-    public void getAllUsers(){
-        Call<List<UserResponse>> userlist = ApiClient.getUserService().getaAllUsers();
 
-        userlist.enqueue(new Callback<List<UserResponse>>() {
+
+    public void getALLJournals(){
+
+        Call<List<JournalsResponse>> userlist = ApiClient.getUserService().getAllJournals();
+
+        userlist.enqueue(new Callback<List<JournalsResponse>>() {
             @Override
-            public void onResponse(Call<List<UserResponse>> call, Response<List<UserResponse>> response) {
-                if(response.isSuccessful()){
-                    List<UserResponse> userResponses = response.body();
-                    userAdapter.setData(userResponses);
-                    recyclerView.setAdapter(userAdapter);
+            public void onResponse(Call<List<JournalsResponse>> call, Response<List<JournalsResponse>> response) {
+                if (response.isSuccessful()) {
+
+                    List<JournalsResponse> journals = response.body();
+                    placeHolderView.removeAllViews();
+                    for(JournalsResponse value: journals) {
+                        placeHolderView.addView(new JournalViewHolder(MainActivity.this, value));
+                    }
+
                 }
 
             }
 
             @Override
-            public void onFailure(Call<List<UserResponse>> call, Throwable t) {
-                Log.e("faliure", t.getLocalizedMessage());
+            public void onFailure(Call<List<JournalsResponse>> call, Throwable t) {
+
             }
         });
+
+
 
     }
 
 
 }
+
+

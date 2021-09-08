@@ -18,18 +18,19 @@
             android:layout_height="wrap_content"/>
 
     </androidx.appcompat.widget.Toolbar>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/reciclerview"
-        android:padding="10dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-    />
-</LinearLayout>
+        android:layout_height="match_parent">
+
+
+        <com.mindorks.placeholderview.PlaceHolderView
+            android:id="@+id/placeholderview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+
+    </LinearLayout>
 
 
 </LinearLayout>
